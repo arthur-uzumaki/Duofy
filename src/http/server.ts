@@ -14,6 +14,7 @@ import {
 } from 'fastify-type-provider-zod'
 
 import { authenticateRoute } from './routes/authenticate-route'
+import { getOrdersRoute } from './routes/get-orders-route'
 import { registerUserRoute } from './routes/register-user-route'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
@@ -21,12 +22,30 @@ const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
+app.setErrorHandler((error, request, reply) => {
+  console.error(error)
+  reply.status(500).send({ message: 'Internal Server Error' })
+})
 app.register(fastifySwagger, {
   openapi: {
     info: {
       title: 'Teste Técnico Duofy',
       version: '1.0.0',
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   transform: jsonSchemaTransform,
 })
@@ -45,6 +64,7 @@ app.register(fastifyCors, {
 
 app.register(registerUserRoute)
 app.register(authenticateRoute)
+app.register(getOrdersRoute)
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log('Running server http://localhost:3333')

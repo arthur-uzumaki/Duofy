@@ -42,6 +42,7 @@ export class AuthenticateUseCase {
       },
       {
         sub: user.id,
+        expiresIn: '7 days',
       }
     )
     return { accessToken }
