@@ -14,6 +14,7 @@ import {
 } from 'fastify-type-provider-zod'
 
 import { authenticateRoute } from './routes/authenticate-route'
+import { createOrdersRoute } from './routes/create-orders-route'
 import { getOrdersRoute } from './routes/get-orders-route'
 import { registerUserRoute } from './routes/register-user-route'
 
@@ -65,6 +66,7 @@ app.register(fastifyCors, {
 app.register(registerUserRoute)
 app.register(authenticateRoute)
 app.register(getOrdersRoute)
+app.register(createOrdersRoute)
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log('Running server http://localhost:3333')

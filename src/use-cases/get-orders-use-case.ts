@@ -38,6 +38,9 @@ export class GetOrdersUseCase {
       where: {
         userId,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
     return { orders }

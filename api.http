@@ -27,3 +27,19 @@ Content-Type: application/json
 # @name get_orders
 GET {{baseUrl}}/orders
 Authorization: Bearer {{authToken}}
+
+###
+
+# @name create-orders
+POST {{baseUrl}}/orders
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productId": "cm8ok937f0001vyp0pdvuqwqw",
+      "quantity": 7
+    }
+  ]
+}
