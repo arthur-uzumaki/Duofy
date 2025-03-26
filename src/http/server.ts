@@ -15,7 +15,9 @@ import {
 
 import { authenticateRoute } from './routes/authenticate-route'
 import { createOrdersRoute } from './routes/create-orders-route'
+import { getOrderDetailsRoute } from './routes/get-order-details-route'
 import { getOrdersRoute } from './routes/get-orders-route'
+import { profileRoute } from './routes/profile-route'
 import { registerUserRoute } from './routes/register-user-route'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
@@ -67,6 +69,8 @@ app.register(registerUserRoute)
 app.register(authenticateRoute)
 app.register(getOrdersRoute)
 app.register(createOrdersRoute)
+app.register(profileRoute)
+app.register(getOrderDetailsRoute)
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log('Running server http://localhost:3333')
