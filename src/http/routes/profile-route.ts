@@ -1,4 +1,5 @@
 import type { FastifyTypedInstance } from '@/@types/types'
+import { ProfileUseCase } from '@/use-cases/profile-use-case'
 import { authenticate } from '@/utils/authenticate'
 import z from 'zod'
 
@@ -10,11 +11,11 @@ export function profileRoute(app: FastifyTypedInstance) {
       schema: {
         tags: ['User'],
         description: 'profile user',
-
+        security: [{ bearerAuth: [] }],
         response: {
           200: z.object({
             user: z.object({
-              sub: z.string(),
+              id: z.string(),
               name: z.string(),
               email: z.string().email(),
             }),
@@ -23,7 +24,14 @@ export function profileRoute(app: FastifyTypedInstance) {
       },
     },
     async (request, reply) => {
-      return reply.status(200).send({ user: request.user })
+      const userId = request.user.sub
+
+      const profileUseCase = new ProfileUseCase()
+      const result = await profileUseCase.execute({ userId })
+
+      const { user } = result
+
+      return reply.status(200).send({ user })
     }
   )
 }

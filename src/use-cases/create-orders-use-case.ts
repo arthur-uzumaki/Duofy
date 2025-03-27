@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { ResourceNotFound } from './_errors/resource-not-found-error'
+import { UnauthorizedError } from './_errors/unauthorized-error'
 
 interface CreateOrdersUseCaseRequest {
   userId: string
@@ -20,6 +21,16 @@ export class CreateOrdersUseCase {
   }: CreateOrdersUseCaseRequest): Promise<CreateOrdersUseCaseResponse> {
     let total = 0
     const orderItems = []
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
+      throw new UnauthorizedError()
+    }
 
     for (const item of items) {
       const product = await prisma.product.findUnique({

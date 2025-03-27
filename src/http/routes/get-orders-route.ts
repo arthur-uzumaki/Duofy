@@ -11,6 +11,7 @@ export async function getOrdersRoute(app: FastifyTypedInstance) {
       schema: {
         tags: ['Order'],
         description: 'Get orders',
+        security: [{ bearerAuth: [] }],
         response: {
           200: z.object({
             orders: z
@@ -38,19 +39,11 @@ export async function getOrdersRoute(app: FastifyTypedInstance) {
               })
               .array(),
           }),
-          401: z.object({
-            message: z.string(),
-          }),
         },
-        security: [{ bearerAuth: [] }],
       },
     },
     async (request, reply) => {
       const userId = request.user.sub
-
-      if (!userId) {
-        return reply.status(401).send({ message: 'Unauthorized' })
-      }
 
       const getOrdersUseCase = new GetOrdersUseCase()
 

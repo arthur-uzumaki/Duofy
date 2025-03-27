@@ -11,13 +11,15 @@ export async function createOrdersRoute(app: FastifyTypedInstance) {
       schema: {
         tags: ['Order'],
         description: 'Create orders ',
+        security: [{ bearerAuth: [] }],
         body: z.object({
           items: z
             .object({
               productId: z.string(),
               quantity: z.number().int().positive(),
             })
-            .array(),
+            .array()
+            .min(1),
         }),
         response: {
           201: z.object({

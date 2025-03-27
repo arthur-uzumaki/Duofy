@@ -11,6 +11,7 @@ export async function getOrderDetailsRoute(app: FastifyTypedInstance) {
       schema: {
         tags: ['Order'],
         description: 'Get order details',
+        security: [{ bearerAuth: [] }],
         params: z.object({
           orderId: z.string(),
         }),

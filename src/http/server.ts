@@ -13,6 +13,7 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
+import { errorHandler } from './error-handler'
 import { authenticateRoute } from './routes/authenticate-route'
 import { createOrdersRoute } from './routes/create-orders-route'
 import { getOrderDetailsRoute } from './routes/get-order-details-route'
@@ -44,11 +45,6 @@ app.register(fastifySwagger, {
         },
       },
     },
-    security: [
-      {
-        bearerAuth: [],
-      },
-    ],
   },
   transform: jsonSchemaTransform,
 })
@@ -64,6 +60,8 @@ app.register(fastifyJwt, {
 app.register(fastifyCors, {
   origin: env.BASE_URL_WEB,
 })
+
+app.setErrorHandler(errorHandler)
 
 app.register(registerUserRoute)
 app.register(authenticateRoute)

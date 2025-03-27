@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { UserAlreadyExistsError } from './_errors/user-already-exists-error'
+import { UnauthorizedError } from './_errors/unauthorized-error'
 
 interface GetOrdersUseCaseRequest {
   userId: string
@@ -7,6 +7,16 @@ interface GetOrdersUseCaseRequest {
 
 export class GetOrdersUseCase {
   async execute({ userId }: GetOrdersUseCaseRequest) {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    })
+
+    if (!user) {
+      throw new UnauthorizedError()
+    }
+
     const orders = await prisma.order.findMany({
       select: {
         id: true,
