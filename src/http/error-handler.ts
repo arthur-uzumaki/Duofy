@@ -7,6 +7,8 @@ import type { FastifyInstance } from 'fastify'
 type FastifyErrorHandle = FastifyInstance['errorHandler']
 
 export const errorHandler: FastifyErrorHandle = (error, request, reply) => {
+  console.log(error)
+
   if (error instanceof UnauthorizedError || error.statusCode === 401) {
     return reply.status(401).send({
       error: error.message,

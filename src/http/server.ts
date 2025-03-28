@@ -13,6 +13,7 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
+import { startConsumer } from '@/consumers/order-processor'
 import { errorHandler } from './error-handler'
 import { authenticateRoute } from './routes/authenticate-route'
 import { createOrdersRoute } from './routes/create-orders-route'
@@ -69,6 +70,10 @@ app.register(getOrdersRoute)
 app.register(createOrdersRoute)
 app.register(profileRoute)
 app.register(getOrderDetailsRoute)
+
+app.addHook('onReady', async () => {
+  await startConsumer().catch(console.log)
+})
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log('Running server http://localhost:3333')
