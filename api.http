@@ -6,8 +6,8 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "Jonh Doe ",
-  "email": "jonhdoe@gmail.com",
+  "name": "Jonh Doee ",
+  "email": "jonhdoee@gmail.com",
   "password": "123456"
 }
 
@@ -18,7 +18,7 @@ POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-  "email": "jonhdoe@gmail.com",
+  "email": "jonhdoee@gmail.com",
   "password": "123456"
 }
 
@@ -46,7 +46,7 @@ Content-Type: application/json
   "items": [
     {
       "productId": "cm8ok937f0001vyp0pdvuqwqw",
-      "quantity": 9
+      "quantity": 50
     }
   ]
 }
@@ -54,5 +54,5 @@ Content-Type: application/json
 ###
 
 # @name get-order-details
-GET {{baseUrl}}/orders/cm8ok938a000bvyp07tjvmu41
+GET {{baseUrl}}/orders/cm8t32sc10001vybw1v4wnklx
 Authorization: Bearer {{authToken}}

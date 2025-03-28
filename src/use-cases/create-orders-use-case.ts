@@ -1,6 +1,6 @@
 import { env } from '@/env/env'
 import { prisma } from '@/lib/prisma'
-import RabbitmqServer from '@/services/rabbitmq-server'
+import { RabbitmqServer } from '@/services/rabbitmq-server'
 import { ResourceNotFound } from './_errors/resource-not-found-error'
 import { UnauthorizedError } from './_errors/unauthorized-error'
 
@@ -81,9 +81,8 @@ export class CreateOrdersUseCase {
     const rabbitmqServer = new RabbitmqServer(env.RABBITMQ_URL)
     await rabbitmqServer.start()
 
-    await rabbitmqServer.publishInExchange(
-      'amq.direct',
-      'rota',
+    await rabbitmqServer.publishInQueue(
+      'orders',
       JSON.stringify({ orderId: order.id })
     )
 

@@ -1,6 +1,6 @@
 import { type Channel, type Connection, type Message, connect } from 'amqplib'
 
-export default class RabbitmqServer {
+export class RabbitmqServer {
   private conn: Connection
   private channel: Channel
 
