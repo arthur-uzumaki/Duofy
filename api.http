@@ -46,7 +46,7 @@ Content-Type: application/json
   "items": [
     {
       "productId": "cm8ok937f0001vyp0pdvuqwqw",
-      "quantity": 7
+      "quantity": 9
     }
   ]
 }

@@ -8,6 +8,9 @@ const envSchema = z.object({
   POSTGRES_PASSWORD: z.string(),
   POSTGRES_DB: z.string(),
   BASE_URL_WEB: z.string().url(),
+  RABBITMQ_USERNAME: z.string(),
+  RABBITMQ_PASSWORD: z.string(),
+  RABBITMQ_URL: z.string().url(),
 })
 
 export const env = envSchema.parse(process.env)

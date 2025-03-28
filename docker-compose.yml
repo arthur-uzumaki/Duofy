@@ -10,5 +10,29 @@ services:
     volumes:
       - orders_pg_data:/bitnami/postgresql
 
+  rabbitmq:
+    image: "rabbitmq:management"
+    container_name: nodejs-rabbitmq-rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - "./.rabbitmq_data:/var/lib/rabbitmq/mnesia"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+  mongodb:
+    image: 'bitnami/mongodb:latest'
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGODB_ROOT_USER=${MONGODB_ROOT_USER}
+      - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+    volumes:
+      - mongo_data:/bitnami/mongodb
+
 volumes:
   orders_pg_data:
+  mongo_data:
