@@ -1,0 +1,10 @@
+# Pastas e arquivos a serem ignorados no build do Docker
+.rabbitmq_data/
+node_modules/
+.env
+.git/
+.vscode/
+*.log
+.DS_Store
+dist/
+tmp/

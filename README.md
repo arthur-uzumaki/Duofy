@@ -1,4 +1,4 @@
-# Duofy 
+# Teste Técnico para Desenvolvedor Backend 
 
  ## Ferramenta Back-End
  - Nodejs
@@ -24,3 +24,4 @@
   - Execute docker-compose up -d . Ele vai baixar os contêineres
   - Execute npm run dev para iniciar o servidor.
   - Acessa a url do swagger http://localhost:3333/docs
+  - Acessa um arquivo na raiz do projeto api.http pra testa as rotas
