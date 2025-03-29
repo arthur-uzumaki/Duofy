@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { PrismaClient } from '@prisma/client'
+import { hash } from 'bcrypt'
 
 const prisma = new PrismaClient()
 
@@ -8,8 +9,13 @@ async function seed() {
   await prisma.order.deleteMany()
   await prisma.product.deleteMany()
 
-  const userId = 'cm8nscw2g0000vy80b8gmuo11'
-
+  const user = await prisma.user.create({
+    data: {
+      name: faker.person.firstName(),
+      email: faker.internet.email(),
+      password: await hash('123456', 8),
+    },
+  })
   const productData = Array.from({ length: 10 }, () => ({
     name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
@@ -36,7 +42,7 @@ async function seed() {
     let total = 0
 
     const order = {
-      userId,
+      userId: user.id,
       status: faker.helpers.arrayElement([
         'PENDING',
         'PROCESSING',
